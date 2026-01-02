@@ -1,17 +1,17 @@
-resource "aws_instance" "roboshop" {
+resource "aws_instance" "terraform" {
   count = length(var.instances)
   ami           = "ami-09c813fb71547fc4f"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.allow_all_ssh.id]
+  vpc_security_group_ids = [aws_security_group.allow_all_p.id]
 
   tags = {
-    Name = "var.instances[count.index]"
+    Name = var.instances[count.index]
     Terraform =  true
   }
 }
 
-resource "aws_security_group" "allow_all_ssh" {
-  name        = "allow_all_ssh"
+resource "aws_security_group" "allow_all_p" {
+  name        = "allow_all_p"
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   ingress {
@@ -29,6 +29,6 @@ resource "aws_security_group" "allow_all_ssh" {
   }
 
   tags = {
-    Name = "allow_all_ssh"
+    Name = "allow_all_p"
   }
 }
